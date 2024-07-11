@@ -1,24 +1,23 @@
-Sub Verificacao()
+Sub VerificarDuplicatas()
 
-Dim copiar As String
-Dim contador, contador2 As Integer
+    Dim valorAtual As String
+    Dim linhaAtual, linhaComparacao As Integer
+    Dim totalLinhas As Integer
+    
+    ' Obter o número total de linhas com dados na coluna A
+    totalLinhas = Cells(Rows.Count, 1).End(xlUp).Row
 
-contador = 1
-contador2 = 1
-
-While contador <= 1252
-    copiar = Cells(contador, 1)
-    While contador2 <= 1252
-    If copiar = Cells(contador2 + 1, 1) Then
-        Cells(contador, 2) = copiar
-        contador2 = contador2 + 1
-    Else
-        contador2 = contador2 + 1
-    End If
-    Wend
-contador = contador + 1
-contador2 = contador
-Wend
-          
+    ' Loop através de cada linha na coluna A
+    For linhaAtual = 1 To totalLinhas
+        valorAtual = Cells(linhaAtual, 1).Value
+        
+        ' Loop através das linhas restantes para comparar valores
+        For linhaComparacao = linhaAtual + 1 To totalLinhas
+            If valorAtual = Cells(linhaComparacao, 1).Value Then
+                Cells(linhaAtual, 2).Value = valorAtual
+                Exit For ' Sai do loop interno quando uma duplicata é encontrada
+            End If
+        Next linhaComparacao
+    Next linhaAtual
 
 End Sub
